@@ -1,0 +1,41 @@
+public static void main(String[] args) {
+        List<Tbean> list=new ArrayList();
+        Tbean  mtyb=new Tbean();
+        mtyb.setMonths("2018-06");
+        mtyb.setYb(10);
+        mtyb.setHh(0);
+        mtyb.setGq(0);
+        list.add(mtyb);
+        Tbean  mthh=new Tbean();
+        mthh.setMonths("2018-06");
+        mthh.setYb(0);
+        mthh.setHh(20);
+        mthh.setGq(0);
+        list.add(mthh);
+        Tbean  mtgq=new Tbean();
+        mtgq.setMonths("2018-06");
+        mtgq.setYb(0);
+        mtgq.setHh(0);
+        mtgq.setGq(30);
+        list.add(mtgq);
+        list.stream().forEach(a->{
+            list.stream().filter(b-> b.getMonths().equals(a.getMonths())).forEach(c->{
+                if(c.getYb().intValue()!=0){
+                    a.setYb(c.getYb());
+                }
+                if(c.getHh().intValue()!=0){
+                    a.setHh(c.getHh());
+                }
+                if(c.getGq().intValue()!=0){
+                    a.setGq(c.getGq());
+                }
+            });
+        });
+        List<String> months = new ArrayList<>();
+        List<Tbean> personList =  list.stream().filter(  v -> {
+            boolean flag = ! months.contains(v.getMonths());
+            months.add(v.getMonths());
+            return flag;
+        } ).collect(Collectors.toList());
+        System.out.println(JSON.toJSONString(personList));
+    }
